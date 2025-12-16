@@ -1,0 +1,24 @@
+{
+  "Data Overview": {
+    "Total Records": 365000,
+    "Date Range": "2023-12-17 00:00:00 to 2025-12-15 00:00:00",
+    "Unique SKUs": 500,
+    "Unique Categories": 5
+  },
+  "Sales Statistics": {
+    "Total Units Sold": 11778505,
+    "Total Revenue": "$1,265,023,380.72",
+    "Average Daily Sales": "32.27",
+    "Median Daily Sales": "28.00",
+    "Zero Sales Days": "54802 (15.01%)"
+  },
+  "Time Patterns": {
+    "Peak Day of Week": "Sun",
+    "Peak Month": "Nov",
+    "Yearly Trend": "Increasing"
+  },
+  "Promotions": {
+    "Promotion Frequency": "10.00%",
+    "Average Lift": "50.36%"
+  }
+}
