@@ -1,0 +1,55 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# --- Jupyter ---
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+
+# Notebook outputs (optional: keep notebooks clean)
+*.nbconvert.ipynb
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+.vscode/
+.idea/
+
+# Cursor / local tooling
+.cursor/
+
+# --- Data & Outputs (do not commit large/generated artifacts) ---
+data/raw/
+data/processed/
+data/external/
+
+outputs/
+
+# If you want to keep folder structure in git, add empty placeholder files like:
+# data/raw/.gitkeep, outputs/reports/.gitkeep, etc. (and remove these ignores selectively).
+
+# --- Logs ---
+*.log
+
+
