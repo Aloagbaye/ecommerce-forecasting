@@ -97,6 +97,39 @@ python pipelines/forecasting_pipeline.py --method ses --ses-alpha 0.4
 
 ---
 
+## 🧭 Orchestrating with Prefect (Optional)
+
+Prefect lets you run the same pipeline with:
+- retries
+- logging
+- scheduling and monitoring (via Prefect UI)
+
+### 1) Install Prefect
+
+```bash
+pip install prefect
+```
+
+### 2) Run the Prefect flow locally
+
+```bash
+python pipelines/prefect_forecasting_flow.py
+```
+
+This writes:
+- `outputs/forecasts/<run_id>_sku_forecasts.csv`
+- `outputs/reports/<run_id>_prefect_pipeline_report.json`
+
+### 3) (Optional) Start Prefect UI locally
+
+```bash
+prefect server start
+```
+
+Then re-run the flow and watch runs in the UI.
+
+---
+
 ## 🧠 Production Notes (Best Practices)
 
 ### Idempotency

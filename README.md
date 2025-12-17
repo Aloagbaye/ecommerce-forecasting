@@ -119,7 +119,7 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - **Module 6:** Deep Learning (Optional)
 - **Module 7:** Model Evaluation & Business Metrics
 - **Module 8:** Forecast Orchestration & Pipelines ✅
-- **Module 9:** Deployment (Forecast as a Service)
+- **Module 9:** Deployment (Forecast as a Service) ✅
 - **Module 10:** Monitoring & Drift Detection
 - **Module 11:** Capstone Extensions
 
