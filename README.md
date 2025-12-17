@@ -115,6 +115,7 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - **Module 3:** Baseline Forecasting Models
 - **Module 4:** Classical Time Series Models
 - **Module 5:** Machine Learning Forecasting
+- **Module 5.1:** Hierarchical Forecasting
 - **Module 6:** Deep Learning (Optional)
 - **Module 7:** Model Evaluation & Business Metrics
 - **Module 8:** Forecast Orchestration & Pipelines
