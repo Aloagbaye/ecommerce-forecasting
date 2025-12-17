@@ -144,4 +144,16 @@ This tutorial deployment is intentionally minimal. Next steps typically include:
 - structured logging
 - monitoring (Module 10)
 
+### ✅ Caching added (in this repo)
+
+This repo now includes a simple in-memory dataset cache in `api/app.py`:
+- the dataset is loaded once and reused across requests
+- it reloads automatically if the source file’s mtime changes
+- optional TTL via `FORECAST_CACHE_TTL_SECONDS`
+
+Optional admin reload endpoint (token-guarded):
+- `POST /admin/reload`
+- env: `FORECAST_ADMIN_TOKEN`
+- header: `X-Admin-Token: <token>`
+
 
