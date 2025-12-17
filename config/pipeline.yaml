@@ -1,0 +1,19 @@
+pipeline:
+  horizon_days: 14
+  cutoff_mode: "max_minus_horizon"   # max_minus_horizon | explicit
+  cutoff_date: null                 # YYYY-MM-DD if cutoff_mode=explicit
+
+data:
+  raw_path: "data/raw/sample_sales.csv"
+  processed_path: "data/processed/featured_sales_data.csv"
+
+forecasting:
+  method: "moving_average"          # naive | moving_average | ses
+  ma_window: 7
+  ses_alpha: 0.3
+
+outputs:
+  forecasts_dir: "outputs/forecasts"
+  reports_dir: "outputs/reports"
+
+
