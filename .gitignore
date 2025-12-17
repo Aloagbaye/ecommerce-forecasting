@@ -43,6 +43,8 @@ Desktop.ini
 data/raw/
 data/processed/
 data/external/
+*.zip
+*.csv
 
 outputs/
 
@@ -51,5 +53,6 @@ outputs/
 
 # --- Logs ---
 *.log
+
 
 
