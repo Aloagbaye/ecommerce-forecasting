@@ -490,9 +490,10 @@ ecommerce-forecasting/
 │   ├── api_documentation.md   # API docs (Module 9)
 │   └── deployment_guide.md    # Deployment guide
 │
-├── MODULE_0.md                # This file - Introduction
-├── MODULE_1.md                # Module 1: Understanding the Data
-├── MODULE_1_insights.md        # Module 1 insights report
+├── tutorials/
+│   ├── MODULE_0.md            # This file - Introduction
+│   ├── MODULE_1.md            # Module 1: Understanding the Data
+│   └── MODULE_1_insights.md   # Module 1 insights report
 ├── TUTORIAL_STRUCTURE.md      # Complete tutorial overview
 ├── README.md                   # Project README
 ├── requirements.txt           # Python dependencies

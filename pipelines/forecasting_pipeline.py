@@ -11,6 +11,7 @@ into Airflow/Prefect later.
 
 from __future__ import annotations
 
+import sys
 import argparse
 import json
 import os
@@ -20,6 +21,11 @@ from pathlib import Path
 from typing import Optional
 
 import pandas as pd
+
+# Ensure `src/` imports work regardless of current working directory.
+_REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
 
 try:
     import yaml  # type: ignore

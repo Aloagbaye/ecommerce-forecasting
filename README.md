@@ -42,7 +42,7 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 ### Module 0: Project Setup & Business Context ✅
 **Status:** Ready to use
 
-- [Tutorial Guide](MODULE_0.md) - Introduction and setup
+- [Tutorial Guide](tutorials/MODULE_0.md) - Introduction and setup
 
 **What you'll learn:**
 - Why demand forecasting matters in e-commerce
@@ -51,16 +51,16 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - Setting up your development environment
 
 **Get started:**
-1. Read [MODULE_0.md](MODULE_0.md)
+1. Read [tutorials/MODULE_0.md](tutorials/MODULE_0.md)
 2. Set up your environment
 3. Generate sample data
 
 ### Module 1: Understanding the Data ✅
 **Status:** Ready to use
 
-- [Tutorial Guide](MODULE_1.md) - Complete walkthrough
+- [Tutorial Guide](tutorials/MODULE_1.md) - Complete walkthrough
 - [EDA Notebook](notebooks/01_eda.ipynb) - Exploratory data analysis
-- [Insights Report](MODULE_1_insights.md) - Analysis insights
+- [Insights Report](tutorials/MODULE_1_insights.md) - Analysis insights
 
 **What you'll learn:**
 - Load and inspect e-commerce sales data
@@ -69,14 +69,14 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - Assess data quality
 
 **Get started:**
-1. Read [MODULE_1.md](MODULE_1.md)
+1. Read [tutorials/MODULE_1.md](tutorials/MODULE_1.md)
 2. Open `notebooks/01_eda.ipynb`
 3. Follow along with the tutorial
 
 ### Module 2: Data Cleaning & Feature Engineering ✅
 **Status:** Ready to use
 
-- [Tutorial Guide](MODULE_2.md) - Complete walkthrough
+- [Tutorial Guide](tutorials/MODULE_2.md) - Complete walkthrough
 - [Feature Engineering Notebook](notebooks/02_data_cleaning.ipynb) - Data cleaning and feature engineering
 
 **What you'll learn:**
@@ -88,14 +88,14 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - Construct a reusable feature engineering pipeline
 
 **Get started:**
-1. Read [MODULE_2.md](MODULE_2.md)
+1. Read [tutorials/MODULE_2.md](tutorials/MODULE_2.md)
 2. Open `notebooks/02_data_cleaning.ipynb`
 3. Follow along with the tutorial
 
 ### Module 3: Baseline Forecasting Models ✅
 **Status:** Ready to use
 
-- [Tutorial Guide](MODULE_3.md) - Baselines + evaluation
+- [Tutorial Guide](tutorials/MODULE_3.md) - Baselines + evaluation
 - [Baseline Models Notebook](notebooks/03_baseline_models.ipynb) - Run baselines and compare errors
 
 **What you'll learn:**
@@ -107,7 +107,7 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 
 **Get started:**
 1. Ensure `data/processed/featured_sales_data.csv` exists (run Module 2)
-2. Read [MODULE_3.md](MODULE_3.md)
+2. Read [tutorials/MODULE_3.md](tutorials/MODULE_3.md)
 3. Open `notebooks/03_baseline_models.ipynb`
 4. Run all cells to generate the comparison tables
 
@@ -118,7 +118,7 @@ python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days
 - **Module 5.1:** Hierarchical Forecasting
 - **Module 6:** Deep Learning (Optional)
 - **Module 7:** Model Evaluation & Business Metrics
-- **Module 8:** Forecast Orchestration & Pipelines
+- **Module 8:** Forecast Orchestration & Pipelines ✅
 - **Module 9:** Deployment (Forecast as a Service)
 - **Module 10:** Monitoring & Drift Detection
 - **Module 11:** Capstone Extensions
@@ -157,7 +157,7 @@ ecommerce-forecasting/
 
 2. **Start with Module 1:**
    - Open `notebooks/01_eda.ipynb`
-   - Follow the tutorial in `MODULE_1.md`
+   - Follow the tutorial in `tutorials/MODULE_1.md`
 
 3. **Explore the data:**
    ```python
@@ -202,7 +202,7 @@ This is a tutorial project. Feel free to:
 ## 📚 Resources
 
 - [Full Tutorial Structure](TUTORIAL_STRUCTURE.md)
-- [Module 1 Guide](MODULE_1.md)
+- [Module 1 Guide](tutorials/MODULE_1.md)
 
 ---
 
