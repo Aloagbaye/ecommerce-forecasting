@@ -1,6 +1,6 @@
 # E-Commerce Demand Forecasting System
 
-An end-to-end tutorial project for building production-ready demand forecasting systems for e-commerce.
+An end-to-end production-ready demand forecasting systems for e-commerce.
 
 ## 🎯 Project Overview
 
