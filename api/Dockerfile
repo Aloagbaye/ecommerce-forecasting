@@ -9,7 +9,11 @@ RUN pip install --no-cache-dir -r /app/api-requirements.txt
 # Copy repo code needed for forecasting logic
 COPY src /app/src
 COPY api /app/api
-COPY data /app/data
+
+# Create the data directory tree so a volume can be mounted at runtime.
+# Data is never baked into the image — mount it with:
+#   docker run -v /path/to/your/data:/app/data ...
+RUN mkdir -p /app/data/raw /app/data/processed /app/data/external
 
 ENV FORECAST_DATA_PATH="data/raw/sample_sales.csv"
 EXPOSE 8000
