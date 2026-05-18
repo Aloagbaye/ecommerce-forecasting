@@ -20,6 +20,8 @@ dist/
 .coverage
 coverage.xml
 htmlcov/
+#private
+docs/
 
 # --- Jupyter ---
 .ipynb_checkpoints/

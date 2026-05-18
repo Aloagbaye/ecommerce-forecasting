@@ -1,209 +1,127 @@
 # E-Commerce Demand Forecasting System
 
-An end-to-end production-ready demand forecasting systems for e-commerce.
+A production-grade demand forecasting platform for e-commerce operations, covering the full lifecycle from raw sales data to deployed forecast APIs with automated monitoring and retraining.
 
-## 🎯 Project Overview
+## The Problem
 
-This project guides you through building a complete demand forecasting system from data exploration to deployment, covering:
+Inventory decisions in e-commerce are made under uncertainty. Overstock ties up working capital and increases carrying costs. Stockouts erode customer trust and hand revenue to competitors. The gap between intuition-based ordering and data-driven forecasting directly impacts margin.
 
-- **Data Exploration & Cleaning** - Understanding e-commerce sales patterns
-- **Baseline to Advanced Models** - From simple averages to deep learning
-- **Model Evaluation** - Business-relevant metrics and comparisons
-- **Deployment** - API service with Docker
-- **Monitoring** - Drift detection and automated retraining
+This system addresses that gap by producing SKU-level demand forecasts that account for seasonality, promotions, price sensitivity, and trend — at the granularity and cadence required for operational procurement decisions.
 
-## 📚 Getting Started
+## What This System Does
+
+- **Ingests and cleans** raw transactional sales data, handling missing dates, outliers, and irregular SKU activity
+- **Engineers demand signals** including temporal patterns, lag features, rolling statistics, and promotion indicators
+- **Trains and compares** a model hierarchy from statistical baselines through gradient boosting to deep learning (LSTM/Transformer)
+- **Evaluates forecasts** against business-relevant metrics: MAE, RMSE, WAPE, and sMAPE with per-SKU breakdown
+- **Serves forecasts** via a FastAPI endpoint, containerized for deployment
+- **Monitors production** for distribution drift and triggers automated retraining when forecast degradation is detected
+
+## Getting Started
 
 ### Prerequisites
 
 - Python 3.8+
 - pip or conda
+- Docker (for deployment)
 
 ### Installation
 
-1. Clone this repository:
 ```bash
 git clone <repository-url>
 cd ecommerce-forecasting
-```
-
-2. Install dependencies:
-```bash
 pip install -r requirements.txt
 ```
 
-3. Generate sample data (or use your own):
+### Data
+
+Generate a synthetic dataset representative of real e-commerce demand patterns (seasonal spikes, promotion lifts, multi-SKU variability):
+
 ```bash
 python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days 730 --skus 100
 ```
 
-## 📖 Tutorial Modules
+Or drop your own CSV into `data/raw/` and configure the schema mapping in `config/`.
 
-### Module 0: Project Setup & Business Context ✅
-**Status:** Ready to use
+## System Components
 
-- [Tutorial Guide](tutorials/MODULE_0.md) - Introduction and setup
+### Data Pipeline
 
-**What you'll learn:**
-- Why demand forecasting matters in e-commerce
-- E-commerce demand challenges
-- SKU-level vs category-level forecasting
-- Setting up your development environment
+Handles raw sales ingestion, date gap imputation, outlier treatment, and feature construction. Outputs a model-ready feature matrix with temporal, lag, rolling, and promotion features.
 
-**Get started:**
-1. Read [tutorials/MODULE_0.md](tutorials/MODULE_0.md)
-2. Set up your environment
-3. Generate sample data
+```python
+from src.data.loaders import load_sample_data
+from src.features.engineering import build_feature_matrix
 
-### Module 1: Understanding the Data ✅
-**Status:** Ready to use
+df = load_sample_data()
+features = build_feature_matrix(df)
+```
 
-- [Tutorial Guide](tutorials/MODULE_1.md) - Complete walkthrough
-- [EDA Notebook](notebooks/01_eda.ipynb) - Exploratory data analysis
-- [Insights Report](tutorials/MODULE_1_insights.md) - Analysis insights
+### Forecasting Models
 
-**What you'll learn:**
-- Load and inspect e-commerce sales data
-- Identify time series characteristics
-- Detect seasonality, trends, and patterns
-- Assess data quality
+The system implements a model hierarchy for structured benchmarking and selection:
 
-**Get started:**
-1. Read [tutorials/MODULE_1.md](tutorials/MODULE_1.md)
-2. Open `notebooks/01_eda.ipynb`
-3. Follow along with the tutorial
+| Tier | Models | Use Case |
+|------|--------|----------|
+| Baseline | Naive, Moving Average, SES | Performance floor, sanity checks |
+| Classical | ARIMA, ETS, Prophet | Interpretable univariate forecasts |
+| ML | LightGBM, XGBoost | Cross-SKU patterns, feature-rich forecasting |
+| Deep Learning | LSTM, Temporal Fusion Transformer | Complex seasonality, large SKU catalogs |
 
-### Module 2: Data Cleaning & Feature Engineering ✅
-**Status:** Ready to use
+### Forecast API
 
-- [Tutorial Guide](tutorials/MODULE_2.md) - Complete walkthrough
-- [Feature Engineering Notebook](notebooks/02_data_cleaning.ipynb) - Data cleaning and feature engineering
+A FastAPI service that accepts SKU identifiers and a forecast horizon, returning point forecasts and prediction intervals.
 
-**What you'll learn:**
-- Clean e-commerce sales data (handle missing dates, outliers)
-- Engineer temporal features (day of week, month, seasonality)
-- Create lag features (historical sales patterns)
-- Generate rolling statistics (moving averages, standard deviations)
-- Build promotion and price features
-- Construct a reusable feature engineering pipeline
+```bash
+docker build -t forecast-api .
+docker run -p 8000:8000 forecast-api
+```
 
-**Get started:**
-1. Read [tutorials/MODULE_2.md](tutorials/MODULE_2.md)
-2. Open `notebooks/02_data_cleaning.ipynb`
-3. Follow along with the tutorial
+```bash
+curl -X POST http://localhost:8000/forecast \
+  -H "Content-Type: application/json" \
+  -d '{"sku_id": "SKU_001", "horizon_days": 30}'
+```
 
-### Module 3: Baseline Forecasting Models ✅
-**Status:** Ready to use
+### Monitoring & Retraining
 
-- [Tutorial Guide](tutorials/MODULE_3.md) - Baselines + evaluation
-- [Baseline Models Notebook](notebooks/03_baseline_models.ipynb) - Run baselines and compare errors
+Tracks forecast accuracy and input feature distributions in production. When drift exceeds configurable thresholds, the retraining pipeline is triggered automatically, producing a challenger model evaluated against the current champion before promotion.
 
-**What you'll learn:**
-- Why baselines matter
-- Time-based train/test split (no leakage)
-- Naive, moving average, and SES baselines
-- Evaluation with MAE, RMSE, WAPE, sMAPE
-- Error comparison table (overall + per-SKU)
-
-**Get started:**
-1. Ensure `data/processed/featured_sales_data.csv` exists (run Module 2)
-2. Read [tutorials/MODULE_3.md](tutorials/MODULE_3.md)
-3. Open `notebooks/03_baseline_models.ipynb`
-4. Run all cells to generate the comparison tables
-
-### Upcoming Modules
-- **Module 3:** Baseline Forecasting Models
-- **Module 4:** Classical Time Series Models
-- **Module 5:** Machine Learning Forecasting
-- **Module 5.1:** Hierarchical Forecasting
-- **Module 6:** Deep Learning (PyTorch) ✅
-- **Module 7:** Model Evaluation & Business Metrics
-- **Module 8:** Forecast Orchestration & Pipelines ✅
-- **Module 9:** Deployment (Forecast as a Service) ✅
-- **Module 10:** Monitoring & Drift Detection ✅
-- **Module 11:** Capstone Extensions
-
-See [TUTORIAL_STRUCTURE.md](TUTORIAL_STRUCTURE.md) for the complete curriculum.
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 ecommerce-forecasting/
 ├── data/
-│   ├── raw/           # Original data files
-│   ├── processed/     # Cleaned data
-│   └── external/      # External data sources
-├── notebooks/         # Jupyter notebooks for each module
-├── src/               # Source code
-│   ├── data/          # Data loading utilities
-│   ├── features/      # Feature engineering
-│   ├── models/        # Forecasting models
-│   └── evaluation/    # Evaluation metrics
-├── outputs/           # Generated outputs
-│   ├── forecasts/     # Forecast results
-│   ├── reports/       # Analysis reports
-│   └── visualizations/ # Plots and charts
-├── scripts/           # Utility scripts
-├── config/            # Configuration files
-└── tests/             # Unit tests
+│   ├── raw/                # Source data files
+│   ├── processed/          # Cleaned and feature-engineered data
+│   └── external/           # External signals (holidays, promotions)
+├── notebooks/              # Exploratory analysis and model development
+├── src/
+│   ├── data/               # Ingestion and loading utilities
+│   ├── features/           # Feature engineering pipeline
+│   ├── models/             # Model implementations
+│   └── evaluation/         # Metrics and comparison framework
+├── outputs/
+│   ├── forecasts/          # Forecast outputs
+│   ├── reports/            # Evaluation reports
+│   └── visualizations/     # Charts and plots
+├── scripts/                # Operational scripts
+├── config/                 # Environment and model configuration
+└── tests/                  # Unit and integration tests
 ```
 
-## 🚀 Quick Start
+## Technology Stack
 
-1. **Generate sample data:**
-   ```bash
-   python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days 730 --skus 100
-   ```
+| Layer | Libraries |
+|-------|-----------|
+| Data Processing | pandas, numpy |
+| Visualization | matplotlib, seaborn, plotly |
+| Time Series | statsmodels, pmdarima, Prophet |
+| Machine Learning | scikit-learn, LightGBM, XGBoost |
+| Deep Learning | PyTorch |
+| API | FastAPI |
+| Deployment | Docker |
 
-2. **Start with Module 1:**
-   - Open `notebooks/01_eda.ipynb`
-   - Follow the tutorial in `tutorials/MODULE_1.md`
+## License
 
-3. **Explore the data:**
-   ```python
-   from src.data.loaders import load_sample_data
-   df = load_sample_data()
-   print(df.head())
-   ```
-
-## 📊 Sample Data
-
-The project includes a script to generate realistic synthetic e-commerce data with:
-- Multiple product categories
-- Seasonal patterns
-- Promotion effects
-- Realistic demand variations
-
-Generate it with:
-```bash
-python scripts/generate_sample_data.py --output data/raw/sample_sales.csv --days 730 --skus 100
-```
-
-## 🛠️ Technology Stack
-
-- **Data Processing:** pandas, numpy
-- **Visualization:** matplotlib, seaborn, plotly
-- **Time Series:** statsmodels, pmdarima
-- **Machine Learning:** scikit-learn, lightgbm, xgboost
-- **API:** FastAPI
-- **Deployment:** Docker
-
-## 📝 License
-
-See [LICENSE](LICENSE) file for details.
-
-## 🤝 Contributing
-
-This is a tutorial project. Feel free to:
-- Report issues
-- Suggest improvements
-- Share your implementations
-
-## 📚 Resources
-
-- [Full Tutorial Structure](TUTORIAL_STRUCTURE.md)
-- [Module 1 Guide](tutorials/MODULE_1.md)
-
----
-
-**Happy Forecasting! 🚀**
+See [LICENSE](LICENSE) for details.
