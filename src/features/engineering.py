@@ -183,28 +183,11 @@ def create_promotion_features(
             lambda x: x.rolling(window=window, min_periods=1).sum()
         )
     
-    # Days since last promotion
-    def days_since_promo(group):
-        promo_dates = group[group[promo_col] > 0][date_col]
-        if len(promo_dates) == 0:
-            return pd.Series([np.nan] * len(group), index=group.index)
-        
-        result = []
-        last_promo_date = None
-        for idx, row in group.iterrows():
-            if row[promo_col] > 0:
-                last_promo_date = row[date_col]
-                result.append(0)
-            elif last_promo_date is not None:
-                result.append((row[date_col] - last_promo_date).days)
-            else:
-                result.append(np.nan)
-        return pd.Series(result, index=group.index)
-    
-    df['days_since_last_promo'] = df.groupby(group_col).apply(days_since_promo).reset_index(level=0, drop=True)
-    
-    # Fill NaN with large number (no promotion in history)
-    df['days_since_last_promo'] = df['days_since_last_promo'].fillna(999)
+    # Days since last promotion — vectorized: forward-fill the most recent promo date per SKU
+    df['_promo_date'] = df[date_col].where(df[promo_col] > 0, other=pd.NaT)
+    df['_promo_date'] = df.groupby(group_col)['_promo_date'].ffill()
+    df['days_since_last_promo'] = (df[date_col] - df['_promo_date']).dt.days.fillna(999)
+    df = df.drop(columns=['_promo_date'])
     
     return df
 
